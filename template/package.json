@@ -7,16 +7,19 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
-    "build": "node build/build.js"{{#unit}},
+    "build": "node build/build.js && cp domo/manifest.json dist/ && cp domo/thumbnail.png dist/"{{#unit}},
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run"{{/unit}}{{#e2e}},
     "e2e": "node test/e2e/runner.js"{{/e2e}}{{#if_or unit e2e}},
     "test": "{{#unit}}npm run unit{{/unit}}{{#unit}}{{#e2e}} && {{/e2e}}{{/unit}}{{#e2e}}npm run e2e{{/e2e}}"{{/if_or}}{{#lint}},
-    "lint": "eslint --ext .js,.vue src{{#unit}} test/unit/specs{{/unit}}{{#e2e}} test/e2e/specs{{/e2e}}"{{/lint}}
+    "lint": "eslint --ext .js,.vue src{{#unit}} test/unit/specs{{/unit}}{{#e2e}} test/e2e/specs{{/e2e}}"{{/lint}},
+    "publish": "yarn run build && cd dist/ && domo publish && cp manifest.json ../domo/ && cd ..",
+    "upload": "yarn run publish"
   },
   "dependencies": {
     "vue": "^2.4.2"{{#router}},
     "vue-router": "^2.3.1"{{/router}},
-    "vuetify": "^0.14.7"
+    "vuetify": "^0.14.7",
+    "vuex": "^2.3.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
